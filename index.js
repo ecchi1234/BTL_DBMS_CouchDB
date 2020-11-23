@@ -1,7 +1,6 @@
 const fs = require("fs");
 const nano = require("nano")("http://admin:admin@localhost:5984");
 const process = require("process");
-const { start } = require("repl");
 
 function main() {
   const prompt = require('prompt-sync')({sigint: true});
@@ -11,25 +10,6 @@ function main() {
   insertMulti(file_name);
 }
 
-function getNanoDbFunc() {
-  console.log(nano.db);
-}
-
-function testRequest() {
-  const opts = {
-    db: "_all_dbs",
-    method: "GET",
-    path: "http://admin:admin@localhost:5984/_all_dbs",
-  };
-  nano
-    .request(opts)
-    .then((data) => {
-      console.log(data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-}
 
 function testFile(path) {
   return new Promise(function(resolve, reject) {
@@ -68,8 +48,16 @@ function insertMulti(path) {
 }
 
 
+async function insertMultiFolder(path) {
+  const dir = await fs.promises.opendir(path);
+  for await (const dirent of dir) {
+    insertMulti(path + dirent.name);
+  }
+}
+
+insertMultiFolder('./test-data/');
 
 
-main();
+// main();
 
 
