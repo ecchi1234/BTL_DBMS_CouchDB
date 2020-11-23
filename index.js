@@ -67,9 +67,8 @@ function insertMulti(path) {
   }) 
 }
 
-function insertMultiInFolder(path) {
-  
-}
+
+
 
 main();
 
