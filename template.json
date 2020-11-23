@@ -1,0 +1,11 @@
+{
+    "docs": [
+        {"repeat": 10},
+        {
+            "_id": "uuid",
+            "name": "index",
+            "company": "index",
+            "age": "age"
+        }
+    ]
+}
