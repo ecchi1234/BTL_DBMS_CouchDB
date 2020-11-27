@@ -4,10 +4,24 @@ const process = require("process");
 
 function main() {
   const prompt = require("prompt-sync")({ sigint: true });
-  console.log("Please enter link of your file");
-  let file_name = prompt(">");
+  console.log("Please enter origin of your file");
+  let file_path = prompt("> ");
+  console.log("Please enter your choice");
+  console.log("1. Insert 1.000.000 documents");
+  console.log("2. Insert 10.000.000 documents");
+  console.log("3. Insert 3.000.000 documents");
+  let choice = parseInt(prompt("> "));
+  
   console.log("wait.....");
-  insertMulti(file_name);
+  if (choice === 1) {
+    calculateInsertPerformance(file_path);
+  }
+  else if (choice === 2) {
+    calculateInsertMultiFolderDuplicate(file_path);
+  }
+  else if (choice === 3) {
+    calculateInsertMultiFolderTuple(file_path);
+  }
 }
 
 function testFile(path) {
@@ -21,7 +35,7 @@ function testFile(path) {
     });
   });
 }
-// this version of insert multi will not return a promise
+// this version of bulk insert will not return a promise
 function insertMulti(path) {
   let person = nano.use("person");
   let start;
@@ -55,7 +69,8 @@ function insertMulti(path) {
       console.log("err");
     });
 }
-// this version of insert multi will return a promise
+// insertMulti("./data/10M-6/1M-4/output1.json");
+// this version of bukl insert will return a promise
 function insertMultiPromise(path) {
   let person = nano.use("person");
   let fileContent = fs.readFileSync(path);
@@ -112,41 +127,253 @@ async function insertMultiFolderOld(path) {
     insertMulti(path + dirent.name);
   }
 }
+// this is the latest best function
+function calculateInsertPerformance(path) {
+  let start = new Date();
+  let hrStart = process.hrtime();
+  let end;
+  let hrEnd;
+  insertMultiPromise(path + "output1.json")
+    .then((res) => {
+      return insertMultiPromise(path + "output2.json");
+    })
+    .then((res) => {
+      return insertMultiPromise(path + "output3.json");
+    })
+    .then((res) => {
+      return insertMultiPromise(path + "output4.json");
+    })
+    .then((res) => {
+      return insertMultiPromise(path + "output5.json");
+    })
+    .then((res) => {
+      return insertMultiPromise(path + "output6.json");
+    })
+    .then((res) => {
+      return insertMultiPromise(path + "output7.json");
+    })
+    .then((res) => {
+      return insertMultiPromise(path + "output8.json");
+    })
+    .then((res) => {
+      return insertMultiPromise(path + "output9.json");
+    })
+    .then((res) => {
+      return insertMultiPromise(path + "output10.json");
+    })
+    .then((res) => {
+      return insertMultiPromise(path + "output11.json");
+    })
+    .then((res) => {
+      return insertMultiPromise(path + "output12.json");
+    })
+    .then((res) => {
+      return insertMultiPromise(path + "output13.json");
+    })
+    .then((res) => {
+      end = new Date() - start;
+      hrEnd = process.hrtime(hrStart);
+      console.info("Execution time: %dms", end);
+      console.info(
+        "Execution time (hr): %ds %dms",
+        hrEnd[0],
+        hrEnd[1] / 1000000
+      );
+      console.log("done");
+    })
+    .catch((err) => {
+      end = new Date() - start;
+      hrEnd = process.hrtime(hrStart);
+      console.info("Execution time: %dms", end);
+      console.info(
+        "Execution time (hr): %ds %dms",
+        hrEnd[0],
+        hrEnd[1] / 1000000
+      );
+      console.log("err");
+    });
+}
 
-// insertMultiFolder('./data-online/');
-
-// const arr = [0, 1, 2, 3, 4]
-
-// for await (const i of arr) {
-//   main();
-// }
-
-// main();
-let start = new Date();
-let hrStart = process.hrtime();
-let end;
-let hrEnd;
-insertMultiPromise("./test-data/data3.json")
-  .then((res) => {
-    return insertMultiPromise("./test-data/data4.json");
-  })
-  .then((res) => {
-    return insertMultiPromise("./test-data/data5.json");
-  })
-  .then((res) => {
-    return insertMultiPromise("./test-data/data6.json");
-  })
-  .then((res) => {
-    end = new Date() - start;
-    hrEnd = process.hrtime(hrStart);
-    console.info("Execution time: %dms", end);
-    console.info("Execution time (hr): %ds %dms", hrEnd[0], hrEnd[1] / 1000000);
-    console.log("done");
-  })
-  .catch((err) => {
-    end = new Date() - start;
-    hrEnd = process.hrtime(hrStart);
-    console.info("Execution time: %dms", end);
-    console.info("Execution time (hr): %ds %dms", hrEnd[0], hrEnd[1] / 1000000);
-    console.log("err");
+// this is the latest best function (test function)
+function calculateInsertPerformanceTest(path) {
+  return new Promise((resolve, reject) => {
+    insertMultiPromise(path + "output1.json")
+      .then((res) => {
+        return insertMultiPromise(path + "output2.json");
+      })
+      .then((res) => {
+        return insertMultiPromise(path + "output3.json");
+      })
+      .then((res) => {
+        return insertMultiPromise(path + "output4.json");
+      })
+      .then((res) => {
+        return insertMultiPromise(path + "output5.json");
+      })
+      .then((res) => {
+        return insertMultiPromise(path + "output6.json");
+      })
+      .then((res) => {
+        return insertMultiPromise(path + "output7.json");
+      })
+      .then((res) => {
+        return insertMultiPromise(path + "output8.json");
+      })
+      .then((res) => {
+        return insertMultiPromise(path + "output9.json");
+      })
+      .then((res) => {
+        return insertMultiPromise(path + "output10.json");
+      })
+      .then((res) => {
+        return insertMultiPromise(path + "output11.json");
+      })
+      .then((res) => {
+        return insertMultiPromise(path + "output12.json");
+      })
+      .then((res) => {
+        return insertMultiPromise(path + "output13.json");
+      })
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((err) => {
+        reject(err);
+      });
   });
+}
+// upgrade to loop in folder
+function calculateInsertMultiFolder(path) {
+  let start = new Date();
+  let hrStart = process.hrtime();
+  let end;
+  let hrEnd;
+  calculateInsertPerformanceTest(path + "1M-2/")
+    .then((res) => {
+      return calculateInsertPerformanceTest(path + "1M-3/");
+    })
+    .then((res) => {
+      return calculateInsertPerformanceTest(path + "1M-4/");
+    })
+    .then((res) => {
+      end = new Date() - start;
+      hrEnd = process.hrtime(hrStart);
+      console.info("Execution time: %dms", end);
+      console.info(
+        "Execution time (hr): %ds %dms",
+        hrEnd[0],
+        hrEnd[1] / 1000000
+      );
+      console.log("done");
+    })
+    .catch((err) => {
+      end = new Date() - start;
+      hrEnd = process.hrtime(hrStart);
+      console.info("Execution time: %dms", end);
+      console.info(
+        "Execution time (hr): %ds %dms",
+        hrEnd[0],
+        hrEnd[1] / 1000000
+      );
+      console.log("err");
+    });
+}
+
+// loop in a folder (it will add duplicate data but it will be oke because couchdb automatically gen id)
+
+function calculateInsertMultiFolderDuplicate(path) {
+  let start = new Date();
+  let hrStart = process.hrtime();
+  let end;
+  let hrEnd;
+  // loop 10 times folder 1m-4 => we will get 10M
+  calculateInsertPerformanceTest(path + "1M-4/")
+    .then((res) => {
+      return calculateInsertPerformanceTest(path + "1M-4/");
+    })
+    .then((res) => {
+      return calculateInsertPerformanceTest(path + "1M-4/");
+    })
+    .then((res) => {
+      return calculateInsertPerformanceTest(path + "1M-4/");
+    })
+    .then((res) => {
+      return calculateInsertPerformanceTest(path + "1M-4/");
+    })
+    .then((res) => {
+      return calculateInsertPerformanceTest(path + "1M-4/");
+    })
+    .then((res) => {
+      return calculateInsertPerformanceTest(path + "1M-4/");
+    })
+    .then((res) => {
+      return calculateInsertPerformanceTest(path + "1M-4/");
+    })
+    .then((res) => {
+      return calculateInsertPerformanceTest(path + "1M-4/");
+    })
+    .then((res) => {
+      return calculateInsertPerformanceTest(path + "1M-4/");
+    })
+    .then((res) => {
+      end = new Date() - start;
+      hrEnd = process.hrtime(hrStart);
+      console.info("Execution time: %dms", end);
+      console.info(
+        "Execution time (hr): %ds %dms",
+        hrEnd[0],
+        hrEnd[1] / 1000000
+      );
+      console.log("done");
+    })
+    .catch((err) => {
+      end = new Date() - start;
+      hrEnd = process.hrtime(hrStart);
+      console.info("Execution time: %dms", end);
+      console.info(
+        "Execution time (hr): %ds %dms",
+        hrEnd[0],
+        hrEnd[1] / 1000000
+      );
+      console.log("err");
+    });
+}
+
+function calculateInsertMultiFolderTuple(path) {
+  let start = new Date();
+  let hrStart = process.hrtime();
+  let end;
+  let hrEnd;
+  // loop 3 times folder 1m-4 => we will get 10M
+  calculateInsertPerformanceTest(path + "1M-4/")
+    .then((res) => {
+      return calculateInsertPerformanceTest(path + "1M-4/");
+    })
+    .then((res) => {
+      return calculateInsertPerformanceTest(path + "1M-4/");
+    })
+    .then((res) => {
+      end = new Date() - start;
+      hrEnd = process.hrtime(hrStart);
+      console.info("Execution time: %dms", end);
+      console.info(
+        "Execution time (hr): %ds %dms",
+        hrEnd[0],
+        hrEnd[1] / 1000000
+      );
+      console.log("done");
+    })
+    .catch((err) => {
+      end = new Date() - start;
+      hrEnd = process.hrtime(hrStart);
+      console.info("Execution time: %dms", end);
+      console.info(
+        "Execution time (hr): %ds %dms",
+        hrEnd[0],
+        hrEnd[1] / 1000000
+      );
+      console.log("err");
+    });
+}
+
+main();

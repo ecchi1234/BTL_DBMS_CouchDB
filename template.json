@@ -3,8 +3,8 @@
         {"repeat": 80000},
         {
             "_id": "uuid",
-            "first-name": "first-name",
-            "last-name": "last-name",
+            "name": "first-name",
+            "company": "last-name",
             "age": "age"
         }
     ]
