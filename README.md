@@ -1,4 +1,4 @@
-# CouchDB Tool V1
+# CouchDB Tool thêm hàng loạt data V2.0
 
 ## 1. Tool gen data: https://github.com/marcosrivasr/json-generator
 
